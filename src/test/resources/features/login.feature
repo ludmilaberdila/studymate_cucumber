@@ -76,3 +76,33 @@ Feature: Login component feature
 		Examples:
 			| class_name |
 			| Mui-error  |
+
+
+	Scenario Outline: Change language when user is logged in
+		Given user navigate to log in page "https://codewiser.studymate.us/login"
+		And user fill email "<username>" and password "<password>" in the login form
+		And user change language "<language>"
+		When user clicks on log in button
+		Then check first nav link for language change, should contain "<text_in_link>"
+		When user change language from home page to "<switch_language>"
+		Then check first nav link for language change, should contain "<switched_language>"
+		And quit the driver
+		Examples:
+			| username           | password    | text_in_link | language | switch_language | switched_language |
+			| admin@codewise.com | codewise123 | Аналитика    | Русский  | English         | Analytics 		   |
+			| admin@codewise.com | codewise123 | Analytics    | English  | Русский		   | Аналитика         |
+
+
+	Scenario Outline: Log user out
+		Given user navigate to log in page "https://codewiser.studymate.us/login"
+		And user fill email "<username>" and password "<password>" in the login form
+		When user clicks on log in button
+		And user clicks on log out button
+		And user select "<confirm_cancel>" button
+		Then user should be redirected to page "<redirect_to_page>"
+		And quit the driver
+		Examples:
+			| username           | password    | confirm_cancel | redirect_to_page                               |
+			| admin@codewise.com | codewise123 | Cancel         | https://codewiser.studymate.us/admin/analytics |
+			| admin@codewise.com | codewise123 | Log out        | https://codewiser.studymate.us/login           |
+
