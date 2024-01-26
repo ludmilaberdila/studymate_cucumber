@@ -1,48 +1,56 @@
 package steps;
 
+import Utilities.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
 import webElements.LogInWebElements;
 
 public class HomeStepsDefinition {
 
-    public static WebDriver driver;
+    private WebDriver driver = null;
+    private static Driver shareDriver;
     public static LogInWebElements logInElements;
+
 
     @Before
     public void initialization(){
         // will create new options and driver for every test case
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origin=*");
-        driver = new ChromeDriver(options);
-        logInElements = new LogInWebElements(this.driver);
+        if(shareDriver == null){
+            shareDriver = new Driver();
+            shareDriver.setDriver();
+        }
+        driver = shareDriver.getDriver();
+        if(driver == null){
+            driver = shareDriver.getDriver();
+        }
+        logInElements = new LogInWebElements(driver);
     }
-//    @After
-//    public void quitDriver(){
-//        // will quit driver after every test case
-//        driver.quit();
-//    }
 
-    @AfterClass
-    public static void afterFinishClassTest(){
+
+    @After
+    public void afterFinishClassTest(){
         // will quit driver after finishing class testing
-        driver.quit();
+        if(driver != null){
+            driver = null;
+        }
+        if(shareDriver.getDriver() != null){
+            shareDriver.quitDriver();
+        }
     }
 
     @Then("quit the driver")
     public void quit_driver(){
-        driver.quit();
+        shareDriver.quitDriver();
+        driver = null;
     }
 
     @Given("user navigate to log in page {string}")
