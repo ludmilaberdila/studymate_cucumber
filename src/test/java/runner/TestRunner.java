@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
         // list all names.feature files
         features = {
                 "src/test/resources/features/login.feature",
+                "src/test/resources/features/trash.feature",
         },
         glue = {"steps"}
 

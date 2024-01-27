@@ -50,4 +50,24 @@ public class LogInWebElements {
 
     @FindBy(xpath = "//div[@id='modal']//form//label")
     public WebElement forgotPassInputLabel;
+
+    @FindBy(css = "header svg.jam")
+    public WebElement homeLanguageChangeBtn;
+
+    @FindBy(css = "div.MuiPaper-root.MuiPaper-elevation[style*='opacity: 1'] ul.MuiList-root")
+    public WebElement homeLanguageDropDown;
+
+    @FindBy(xpath = "//header//p[text()='Administrator']")
+    public WebElement administratorBtnPath;
+
+    @FindBy(css = "div.MuiPaper-root.MuiPaper-elevation[style*='opacity: 1'] ul.MuiList-root li")
+    public WebElement logOutButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'MuiModal-root')]")
+    public  WebElement confirmCancelModal;
+//    @FindBy(xpath = "//div[contains(@class, 'MuiModal-root')]//button[text()='Cancel']")
+//    public WebElement cancelLogoutButton;
+//
+//    @FindBy(xpath = "//div[contains(@class, 'MuiModal-root')]//button[text()='Log out']")
+//    public WebElement confirmLogOutButton;
 }
